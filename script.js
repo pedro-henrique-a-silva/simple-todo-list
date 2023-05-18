@@ -17,7 +17,13 @@ const addTarefa = () => {
 const efeitoClickTarefas = () => {
   listaTarefas.addEventListener('click', (event) => {
     if (event.target.classList.contains('item-lista')) {
-      event.target.classList.add('item-lista-clicado')
+      const selectedItemlist = document.querySelector('#lista-tarefas .item-lista-clicado');
+      if (selectedItemlist) {
+        selectedItemlist.classList.remove('item-lista-clicado');
+        event.target.classList.add('item-lista-clicado');
+      } else {
+        event.target.classList.add('item-lista-clicado');
+      }
     }
   })
 }
