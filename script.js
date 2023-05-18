@@ -41,6 +41,17 @@ const efeitoDbClickTarefas = () => {
   });
 };
 
+const limpaListaTarefas = () => {
+  const botaoLimpar = document.querySelector('#apaga-tudo');
+  botaoLimpar.addEventListener('click', () => {
+    const tarefas = document.querySelectorAll(`.${classItemLista}`);
+    for (let index = 0; index < tarefas.length; index += 1) {
+      tarefas[index].remove();
+    }
+  });
+};
+
 addTarefa();
 efeitoClickTarefas();
 efeitoDbClickTarefas();
+limpaListaTarefas();

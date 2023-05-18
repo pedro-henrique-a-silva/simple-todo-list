@@ -34,3 +34,8 @@ main {
 .completed {
   text-decoration: line-through solid black;
 }
+
+#section-buttons {
+  margin-top: 20px;
+  border: 1px solid green;
+}
