@@ -2,6 +2,32 @@ const listaTarefas = document.querySelector('#lista-tarefas');
 const classItemLista = 'item-lista';
 const classItemListaClicado = 'item-lista-clicado';
 
+const restauraListaTarefas = (objListaTarefas) => {
+  const tarefas = objListaTarefas['tarefas'];
+  for (let index = 0; index < tarefas.length; index += 1) {
+    const liTarefa = document.createElement('li');
+    liTarefa.innerText = tarefas[index].tarefa
+    liTarefa.classList.add(classItemLista);
+    if (tarefas[index].completed) {
+      liTarefa.classList.add('completed');
+    }
+    listaTarefas.appendChild(liTarefa);
+  }
+}
+
+const salvaListaStorage = () => {
+  const tarefas = document.querySelectorAll(`.${classItemLista}`);
+    const objTarefas = {tarefas: []}
+    for (let index = 0; index < tarefas.length; index += 1) {
+      if (tarefas[index].classList.contains('completed')) {
+        objTarefas.tarefas.push({tarefa: tarefas[index].innerText, completed: true})
+      } else {
+        objTarefas.tarefas.push({tarefa: tarefas[index].innerText, completed: false})
+      }
+    }
+    localStorage.setItem('listaTarefas',JSON.stringify(objTarefas));
+}
+
 const addTarefa = () => {
   const addBotao = document.querySelector('#criar-tarefa');
 
@@ -38,6 +64,7 @@ const efeitoDbClickTarefas = () => {
         event.target.classList.add('completed');
       }
     }
+    salvaListaStorage();
   });
 };
 
@@ -48,6 +75,7 @@ const limpaListaTarefas = () => {
     for (let index = 0; index < tarefas.length; index += 1) {
       tarefas[index].remove();
     }
+    localStorage.removeItem('listaTarefas');
   });
 };
 
@@ -58,12 +86,30 @@ const removeTarefasConcluidas = () => {
     for (let index = 0; index < tarefasConcluidas.length; index += 1) {
       tarefasConcluidas[index].remove();
     }
-
+    salvaListaStorage();
   });
 };
 
+const salvaListaTaregas = () => {
+  const botalSalvaTarefas = document.querySelector('#salvar-tarefas');
+  botalSalvaTarefas.addEventListener('click', (event) => {
+    salvaListaStorage();
+  })
+
+}
+
+const initiate = () => {
+  const listaTarefasStorage = JSON.parse(localStorage.getItem('listaTarefas'));
+
+  if (listaTarefasStorage) {
+    restauraListaTarefas(listaTarefasStorage);
+  }
+}
+
+initiate();
 addTarefa();
 efeitoClickTarefas();
 efeitoDbClickTarefas();
 limpaListaTarefas();
 removeTarefasConcluidas();
+salvaListaTaregas();
