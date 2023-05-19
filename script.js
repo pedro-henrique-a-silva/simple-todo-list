@@ -51,7 +51,19 @@ const limpaListaTarefas = () => {
   });
 };
 
+const removeTarefasConcluidas = () => {
+  const botaoLimpaConcluidos = document.querySelector('#remover-finalizados');
+  botaoLimpaConcluidos.addEventListener('click', (event) => {
+    const tarefasConcluidas = document.querySelectorAll('.completed');
+    for (let index = 0; index < tarefasConcluidas.length; index += 1) {
+      tarefasConcluidas[index].remove();
+    }
+
+  });
+};
+
 addTarefa();
 efeitoClickTarefas();
 efeitoDbClickTarefas();
 limpaListaTarefas();
+removeTarefasConcluidas();
