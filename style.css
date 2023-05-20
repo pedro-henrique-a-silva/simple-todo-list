@@ -27,7 +27,7 @@ main {
   margin-left: 20px;
 }
 
-.item-lista-clicado {
+.selected {
   background-color: gray;
 }
 

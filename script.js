@@ -1,6 +1,43 @@
 const listaTarefas = document.querySelector('#lista-tarefas');
 const classItemLista = 'item-lista';
-const classItemListaClicado = 'item-lista-clicado';
+const classItemListaClicado = 'selected';
+
+const moveParaCima = (element) => {
+  const elementoAnterior = element.previousElementSibling;
+  const elementoSelected = element;
+  if (elementoAnterior) {
+    const objTroca = {
+      elementoAnteriorClass: elementoAnterior.className,
+      elementoAnteriorText : elementoAnterior.innerText,
+      elementoSelectedClass: elementoSelected.className,
+      elementoSelectedText : elementoSelected.innerText,
+    }
+    elementoAnterior.className = objTroca.elementoSelectedClass;
+    elementoAnterior.innerText = objTroca.elementoSelectedText;
+  
+    elementoSelected.className = objTroca.elementoAnteriorClass;
+    elementoSelected.innerText = objTroca.elementoAnteriorText;
+  }
+};
+
+const moveParaBaixo = (element) => {
+  const elementoPosterior = element.nextElementSibling;
+  const elementoSelected = element;
+  if (elementoPosterior) {
+    const objTroca = {
+      elementoPosteriorClass: elementoPosterior.className,
+      elementoPosteriorText : elementoPosterior.innerText,
+      elementoSelectedClass : elementoSelected.className,
+      elementoSelectedText  : elementoSelected.innerText,
+    }
+    elementoPosterior.className = objTroca.elementoSelectedClass;
+    elementoPosterior.innerText = objTroca.elementoSelectedText;
+  
+    elementoSelected.className = objTroca.elementoPosteriorClass;
+    elementoSelected.innerText = objTroca.elementoPosteriorText;
+  }
+  
+}
 
 const restauraListaTarefas = (objListaTarefas) => {
   const tarefas = objListaTarefas['tarefas'];
@@ -44,7 +81,7 @@ const addTarefa = () => {
 const efeitoClickTarefas = () => {
   listaTarefas.addEventListener('click', (event) => {
     if (event.target.classList.contains(classItemLista)) {
-      const selectedItemlist = document.querySelector('#lista-tarefas .item-lista-clicado');
+      const selectedItemlist = document.querySelector('#lista-tarefas .selected');
       if (selectedItemlist) {
         selectedItemlist.classList.remove(classItemListaClicado);
         event.target.classList.add(classItemListaClicado);
@@ -106,6 +143,32 @@ const initiate = () => {
   }
 }
 
+const eventoMoverCima = () => {
+  const botaoMoverCima = document.querySelector('#mover-cima');
+
+  botaoMoverCima.addEventListener('click', (event) => {
+    const itemListaSelected = document.querySelector('.selected');
+    if (itemListaSelected) {
+      event.target
+      moveParaCima(itemListaSelected);
+    }
+  })
+};
+
+const eventoMoverBaixo = () => {
+  const botaoMoverCima = document.querySelector('#mover-baixo');
+
+  botaoMoverCima.addEventListener('click', (event) => {
+    const itemListaSelected = document.querySelector('.selected');
+    if (itemListaSelected) {
+      event.target
+      moveParaBaixo(itemListaSelected);
+    }
+  })
+}
+
+//  /* <button id="mover-baixo">Mover para baixo</button>
+
 initiate();
 addTarefa();
 efeitoClickTarefas();
@@ -113,3 +176,5 @@ efeitoDbClickTarefas();
 limpaListaTarefas();
 removeTarefasConcluidas();
 salvaListaTaregas();
+eventoMoverCima();
+eventoMoverBaixo();
