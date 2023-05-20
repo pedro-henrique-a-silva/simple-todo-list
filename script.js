@@ -8,13 +8,12 @@ const moveParaCima = (element) => {
   if (elementoAnterior) {
     const objTroca = {
       elementoAnteriorClass: elementoAnterior.className,
-      elementoAnteriorText : elementoAnterior.innerText,
+      elementoAnteriorText: elementoAnterior.innerText,
       elementoSelectedClass: elementoSelected.className,
-      elementoSelectedText : elementoSelected.innerText,
-    }
+      elementoSelectedText: elementoSelected.innerText,
+    };
     elementoAnterior.className = objTroca.elementoSelectedClass;
     elementoAnterior.innerText = objTroca.elementoSelectedText;
-  
     elementoSelected.className = objTroca.elementoAnteriorClass;
     elementoSelected.innerText = objTroca.elementoAnteriorText;
   }
@@ -26,44 +25,42 @@ const moveParaBaixo = (element) => {
   if (elementoPosterior) {
     const objTroca = {
       elementoPosteriorClass: elementoPosterior.className,
-      elementoPosteriorText : elementoPosterior.innerText,
-      elementoSelectedClass : elementoSelected.className,
-      elementoSelectedText  : elementoSelected.innerText,
-    }
+      elementoPosteriorText: elementoPosterior.innerText,
+      elementoSelectedClass: elementoSelected.className,
+      elementoSelectedText: elementoSelected.innerText,
+    };
     elementoPosterior.className = objTroca.elementoSelectedClass;
     elementoPosterior.innerText = objTroca.elementoSelectedText;
-  
     elementoSelected.className = objTroca.elementoPosteriorClass;
     elementoSelected.innerText = objTroca.elementoPosteriorText;
   }
-  
-}
+};
 
 const restauraListaTarefas = (objListaTarefas) => {
-  const tarefas = objListaTarefas['tarefas'];
+  const { tarefas } = objListaTarefas;
   for (let index = 0; index < tarefas.length; index += 1) {
     const liTarefa = document.createElement('li');
-    liTarefa.innerText = tarefas[index].tarefa
+    liTarefa.innerText = tarefas[index].tarefa;
     liTarefa.classList.add(classItemLista);
     if (tarefas[index].completed) {
       liTarefa.classList.add('completed');
     }
     listaTarefas.appendChild(liTarefa);
   }
-}
+};
 
 const salvaListaStorage = () => {
   const tarefas = document.querySelectorAll(`.${classItemLista}`);
-    const objTarefas = {tarefas: []}
-    for (let index = 0; index < tarefas.length; index += 1) {
-      if (tarefas[index].classList.contains('completed')) {
-        objTarefas.tarefas.push({tarefa: tarefas[index].innerText, completed: true})
-      } else {
-        objTarefas.tarefas.push({tarefa: tarefas[index].innerText, completed: false})
-      }
+  const objTarefas = { tarefas: [] };
+  for (let index = 0; index < tarefas.length; index += 1) {
+    if (tarefas[index].classList.contains('completed')) {
+      objTarefas.tarefas.push({ tarefa: tarefas[index].innerText, completed: true });
+    } else {
+      objTarefas.tarefas.push({ tarefa: tarefas[index].innerText, completed: false });
     }
-    localStorage.setItem('listaTarefas',JSON.stringify(objTarefas));
-}
+  }
+  localStorage.setItem('listaTarefas', JSON.stringify(objTarefas));
+};
 
 const addTarefa = () => {
   const addBotao = document.querySelector('#criar-tarefa');
@@ -118,7 +115,7 @@ const limpaListaTarefas = () => {
 
 const removeTarefasConcluidas = () => {
   const botaoLimpaConcluidos = document.querySelector('#remover-finalizados');
-  botaoLimpaConcluidos.addEventListener('click', (event) => {
+  botaoLimpaConcluidos.addEventListener('click', () => {
     const tarefasConcluidas = document.querySelectorAll('.completed');
     for (let index = 0; index < tarefasConcluidas.length; index += 1) {
       tarefasConcluidas[index].remove();
@@ -129,11 +126,10 @@ const removeTarefasConcluidas = () => {
 
 const salvaListaTaregas = () => {
   const botalSalvaTarefas = document.querySelector('#salvar-tarefas');
-  botalSalvaTarefas.addEventListener('click', (event) => {
+  botalSalvaTarefas.addEventListener('click', () => {
     salvaListaStorage();
-  })
-
-}
+  });
+};
 
 const initiate = () => {
   const listaTarefasStorage = JSON.parse(localStorage.getItem('listaTarefas'));
@@ -141,42 +137,39 @@ const initiate = () => {
   if (listaTarefasStorage) {
     restauraListaTarefas(listaTarefasStorage);
   }
-}
+};
 
 const eventoMoverCima = () => {
   const botaoMoverCima = document.querySelector('#mover-cima');
 
-  botaoMoverCima.addEventListener('click', (event) => {
+  botaoMoverCima.addEventListener('click', () => {
     const itemListaSelected = document.querySelector('.selected');
     if (itemListaSelected) {
-      event.target
       moveParaCima(itemListaSelected);
     }
-  })
+  });
 };
 
 const eventoMoverBaixo = () => {
   const botaoMoverCima = document.querySelector('#mover-baixo');
 
-  botaoMoverCima.addEventListener('click', (event) => {
+  botaoMoverCima.addEventListener('click', () => {
     const itemListaSelected = document.querySelector('.selected');
     if (itemListaSelected) {
-      event.target
       moveParaBaixo(itemListaSelected);
     }
-  })
-}
+  });
+};
 
 const removeItemSelecionado = () => {
   const botaoRemoveSelected = document.querySelector('#remover-selecionado');
-  botaoRemoveSelected.addEventListener('click', (event) => {
+  botaoRemoveSelected.addEventListener('click', () => {
     const itemSelected = document.querySelector('.selected');
     if (itemSelected) {
-      itemSelected.remove()
+      itemSelected.remove();
     }
-
-  })
-}
+  });
+};
 
 initiate();
 addTarefa();
