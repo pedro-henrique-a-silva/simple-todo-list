@@ -167,7 +167,16 @@ const eventoMoverBaixo = () => {
   })
 }
 
-//  /* <button id="mover-baixo">Mover para baixo</button>
+const removeItemSelecionado = () => {
+  const botaoRemoveSelected = document.querySelector('#remover-selecionado');
+  botaoRemoveSelected.addEventListener('click', (event) => {
+    const itemSelected = document.querySelector('.selected');
+    if (itemSelected) {
+      itemSelected.remove()
+    }
+
+  })
+}
 
 initiate();
 addTarefa();
@@ -178,3 +187,4 @@ removeTarefasConcluidas();
 salvaListaTaregas();
 eventoMoverCima();
 eventoMoverBaixo();
+removeItemSelecionado();
